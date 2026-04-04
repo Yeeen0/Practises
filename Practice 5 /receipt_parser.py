@@ -1,7 +1,9 @@
 import re
+import json
 
 with open('/Users/enu/Documents/Practises/Practise 5/raw.txt', 'r', encoding='utf-8') as file:
     txt = file.read()
+
 
     # ex.1
 # prices = r"^\d+,00$"
@@ -9,9 +11,9 @@ with open('/Users/enu/Documents/Practises/Practise 5/raw.txt', 'r', encoding='ut
 # print(result) 
 
     # ex.2
-# pattern = """^\d+\.\n(.+)"""
-# x = re.findall(pattern, txt, re.M)
-# print(x)
+pattern = """^\d+\.\n(.+)"""
+x = re.findall(pattern, txt, re.M)
+print(x)
 
     # ex.3
 # x = re.findall(r"^И.+:\n(.+)", txt, re.M)
@@ -26,3 +28,8 @@ with open('/Users/enu/Documents/Practises/Practise 5/raw.txt', 'r', encoding='ut
 # pattern = r"\b(наличные|карта|картой)\b"
 # x = re.search(pattern, txt, re.M)
 # print(x.group())
+
+    # ex.6
+# with open('/Users/enu/Documents/Practises/Practise 5/raw.txt', 'w', encoding="utf-8") as f:
+#     d = json.dumps(f, indent = 4)
+#     print(d)
