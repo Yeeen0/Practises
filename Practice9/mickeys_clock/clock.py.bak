@@ -1,0 +1,90 @@
+import pygame
+import datetime
+import math
+
+
+class MickeysClock:
+    """
+    Clock class that uses Mickey Mouse hands as clock hands.
+    Right hand = minutes hand
+    Left hand  = seconds hand
+    """
+
+    def __init__(self, screen_width=600, screen_height=600):
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.center = (screen_width // 2, screen_height // 2)
+
+        # Load mickey hand image (used for both hands)
+        self.hand_image = pygame.image.load("images/mickey_hand.png").convert_alpha()
+        # Scale hand to a reasonable size
+        self.hand_image = pygame.transform.scale(self.hand_image, (60, 160))
+
+    def get_current_time(self):
+        """Return current minutes and seconds from system clock."""
+        now = datetime.datetime.now()
+        return now.minute, now.second
+
+    def get_angle(self, value, max_value):
+        """
+        Convert time value to rotation angle in degrees.
+        0 = pointing up (12 o'clock), clockwise = positive.
+        pygame.transform.rotate() rotates counter-clockwise,
+        so we negate the angle.
+        """
+        angle = (value / max_value) * 360
+        return -angle  # Negate for pygame's counter-clockwise rotation
+
+    def draw_hand(self, surface, image, angle):
+        """
+        Rotate and draw a hand centered on the clock center.
+        Uses the technique from StackOverflow #54714144.
+        """
+        # Rotate the hand image
+        rotated = pygame.transform.rotate(image, angle)
+        # Get the rect of the rotated image, centered on clock center
+        rect = rotated.get_rect(center=self.center)
+        surface.blit(rotated, rect)
+
+    def draw(self, surface):
+        """Draw both clock hands for current time."""
+        minutes, seconds = self.get_current_time()
+
+        # Calculate angles (right hand = minutes, left hand = seconds)
+        minute_angle = self.get_angle(minutes, 60)
+        second_angle = self.get_angle(seconds, 60)
+
+        # Draw minutes hand (right hand) - slightly larger
+        minute_hand = pygame.transform.scale(self.hand_image, (55, 150))
+        self.draw_hand(surface, minute_hand, minute_angle)
+
+        # Draw seconds hand (left hand) - slightly thinner
+        second_hand = pygame.transform.scale(self.hand_image, (45, 130))
+        # Flip horizontally to represent the "left" hand
+        second_hand = pygame.transform.flip(second_hand, True, False)
+        self.draw_hand(surface, second_hand, second_angle)
+
+    def draw_clock_face(self, surface):
+        """Draw basic clock face with hour markers."""
+        # Clock circle outline
+        pygame.draw.circle(surface, (200, 200, 200), self.center, 240, 4)
+
+        # Draw 12 hour tick marks
+        for i in range(12):
+            angle_rad = math.radians(i * 30 - 90)
+            outer_x = self.center[0] + int(220 * math.cos(angle_rad))
+            outer_y = self.center[1] + int(220 * math.sin(angle_rad))
+            inner_x = self.center[0] + int(200 * math.cos(angle_rad))
+            inner_y = self.center[1] + int(200 * math.sin(angle_rad))
+            pygame.draw.line(surface, (80, 80, 80), (inner_x, inner_y), (outer_x, outer_y), 4)
+
+        # Draw center dot
+        pygame.draw.circle(surface, (50, 50, 50), self.center, 8)
+
+    def draw_time_text(self, surface, font):
+        """Display current time as text at the bottom."""
+        minutes, seconds = self.get_current_time()
+        time_str = f"{minutes:02d}:{seconds:02d}"
+        text = font.render(time_str, True, (50, 50, 50))
+        rect = text.get_rect(center=(self.screen_width // 2, self.screen_height - 50))
+        surface.blit(text, rect)
