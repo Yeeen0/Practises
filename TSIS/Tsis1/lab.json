@@ -1,0 +1,70 @@
+[
+    {
+        "name": "Madina",
+        "email": "madina@gmail.com",
+        "birthday": "2002-03-08",
+        "group": "Friends",
+        "phones": [
+            {
+                "phone": "87059998877",
+                "type": "mobile"
+            }
+        ]
+    },
+    {
+        "name": "Olzhas",
+        "email": "olzhas.dev@gmail.com",
+        "birthday": "2001-07-01",
+        "group": "Work",
+        "phones": [
+            {
+                "phone": "87023334455",
+                "type": "mobile"
+            }
+        ]
+    },
+    {
+        "name": "Daniyar",
+        "email": "daniyar@work.com",
+        "birthday": "2000-10-10",
+        "group": "Work",
+        "phones": [
+            {
+                "phone": "87081112233",
+                "type": "mobile"
+            },
+            {
+                "phone": "123456",
+                "type": "work"
+            }
+        ]
+    },
+    {
+        "name": "Alikhan",
+        "email": "alikhan.bro@mail.ru",
+        "birthday": "2004-05-15",
+        "group": "Family",
+        "phones": [
+            {
+                "phone": "87015554433",
+                "type": "mobile"
+            },
+            {
+                "phone": "87273332211",
+                "type": "home"
+            }
+        ]
+    },
+    {
+        "name": "Aruzhan",
+        "email": "aru_student@yandex.ru",
+        "birthday": "2005-11-20",
+        "group": "University",
+        "phones": [
+            {
+                "phone": "87771234567",
+                "type": "mobile"
+            }
+        ]
+    }
+]
